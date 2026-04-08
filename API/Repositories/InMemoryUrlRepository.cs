@@ -9,7 +9,7 @@ namespace API.Repositories
         // Хранилище данных
         private readonly ConcurrentDictionary<string, ShortenedUrl> _urls = new();
 
-        // Защита от одновременных запросов, однако реализовал через ConcurrentDictionary
+        // Защита от одновременных запросов - неактуально (реализовал через ConcurrentDictionary)
         private readonly object _locker = new();
 
         public Task<ShortenedUrl?> GetByCodeAsync(string shortCode)

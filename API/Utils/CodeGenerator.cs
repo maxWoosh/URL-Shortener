@@ -11,7 +11,7 @@
         /// </summary>
         /// <param name="length"></param>
         /// <returns>Случайная строка из Base62 Alphabet</returns>
-        private string Generate(int length)
+        public string Generate(int length = 6)
         {
             if (length <= 0)
             {
