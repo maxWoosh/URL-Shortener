@@ -30,7 +30,7 @@ namespace API.Controllers
             var shortenedUrl = await _urlService.CreateShortUrlAsync(request.Url);
 
             var baseUrl = $"{Request.Scheme}://{Request.Host}";
-            var shortUrl = $"{baseUrl}/api/url{shortenedUrl.ShortCode}";
+            var shortUrl = $"{baseUrl}/api/url/{shortenedUrl.ShortCode}";
 
             var response = new ShortenUrlResponse
             {

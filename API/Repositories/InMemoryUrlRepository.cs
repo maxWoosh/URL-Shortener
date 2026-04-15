@@ -27,15 +27,17 @@ namespace API.Repositories
 
         public Task<ShortenedUrl> CreateAsync(ShortenedUrl shortenedUrl)
         {
-            if (_urls.TryAdd(shortenedUrl.ShortCode, shortenedUrl))
+            if (!_urls.TryAdd(shortenedUrl.ShortCode, shortenedUrl))
                 throw new InvalidOperationException($"Код {shortenedUrl.ShortCode} уже существует.");
+
             return Task.FromResult(shortenedUrl);
         }
 
         public Task UpdateAsync(ShortenedUrl shortenedUrl)
         {
             if (!_urls.ContainsKey(shortenedUrl.ShortCode))
-                throw new InvalidOperationException($"Код {shortenedUrl.ShortCode} не найден.");
+                throw new KeyNotFoundException($"Код {shortenedUrl.ShortCode} не найден.");
+
             _urls[shortenedUrl.ShortCode] = shortenedUrl;
             return Task.CompletedTask;
         }

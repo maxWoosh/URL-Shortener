@@ -14,8 +14,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 # region Регистрация зависимостей
-// Репозиторий (in-memory)
-builder.Services.AddScoped<IUrlRepository, InMemoryUrlRepository>();
+// Репозиторий (in-memory) (синглтоном, чтобы данные хранились между запросами)
+builder.Services.AddSingleton<IUrlRepository, InMemoryUrlRepository>();
 
 // Генератор кодов
 builder.Services.AddScoped<CodeGenerator>();
