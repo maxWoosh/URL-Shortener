@@ -1,3 +1,4 @@
+using API.Middleware;
 using API.Repositories;
 using API.Repositories.Interfaces;
 using API.Services;
@@ -6,10 +7,15 @@ using API.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Добавляем контроллер
+// Логирование
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+
+// Контроллер
 builder.Services.AddControllers();
 
-// Настраиваем Swagger/OpenAPI (для тестирования)
+// Swagger/OpenAPI (для тестирования)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -24,9 +30,12 @@ builder.Services.AddScoped<CodeGenerator>();
 builder.Services.AddScoped<IUrlService, UrlService>();
 # endregion
 
+# region Middleware
 var app = builder.Build();
 
-// Конвейер обработки запросов
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<RequestLoggingMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -37,5 +46,6 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 app.Run();
+# endregion
 
 

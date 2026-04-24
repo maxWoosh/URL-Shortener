@@ -59,5 +59,12 @@ namespace API.Controllers
 
             return Redirect(longUrl);
         }
+
+        [HttpGet("test-error")]
+        public IActionResult GetError()
+        {
+            // Тест для Middleware
+            throw new InvalidOperationException("Тестовая ошибка для проверки логов!");
+        }
     }
 }
